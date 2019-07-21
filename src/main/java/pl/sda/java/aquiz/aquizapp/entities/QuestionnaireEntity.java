@@ -2,7 +2,6 @@ package pl.sda.java.aquiz.aquizapp.entities;
 
 
 import lombok.*;
-import sun.util.resources.LocaleData;
 
 
 import javax.persistence.*;
