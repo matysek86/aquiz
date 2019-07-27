@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -18,12 +19,13 @@ public class QuestionEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idQuestion;
 
-    @ManyToOne
-    @JoinColumn(name="idQuestionnaire")
-    QuestionnaireEntity questionnaireEntity;
-
     private String questionText;
     private Integer questionPoints;
+
+    @OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "questionid")
+    private Collection<AnswerEntity> answers;
+
 
 
 

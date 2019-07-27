@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.sql.DataSource;
 
 import static pl.sda.java.aquiz.aquizapp.config.Roles.ADMIN;
+import static pl.sda.java.aquiz.aquizapp.config.Roles.USER;
 
 @Configuration
 public class BasicSecConf extends WebSecurityConfigurerAdapter {
@@ -25,17 +26,18 @@ public class BasicSecConf extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 //.antMatchers("/quizSite").hasRole(Roles.ADMIN.getRoleName())
-                .anyRequest().permitAll()
+                .antMatchers("/").hasAnyRole(USER.getRoleName(), ADMIN.getRoleName())
+                //.anyRequest().permitAll()
                 .and()
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .usernameParameter("name")
+                .usernameParameter("email")
                 .passwordParameter("password")
                 .loginProcessingUrl("/loginBySpring")
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -48,6 +50,12 @@ public class BasicSecConf extends WebSecurityConfigurerAdapter {
                 .withUser("admin@localhost.com")
                 .password(passwordEncoder.encode("admin"))
                 .roles(ADMIN.getRoleName());
+
+        auth.inMemoryAuthentication()
+                .withUser("user@localhost.com")
+                .password(passwordEncoder.encode("user"))
+                .roles(USER.getRoleName());
+
 
 //        auth.jdbcAuthentication()
 //                .dataSource(dataSource)

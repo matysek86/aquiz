@@ -1,12 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Q&Q WLELCOME</title>
 </head>
 <body>
 
-<H4>STRONA GŁÓWNA</H4>
+<p><span> Welcome - Witaj - Willkommen </span> / <span><a th:href="@{/logout}">Wyloguj</a></span></p>
+<br>
+<br>
+
+<!--<div th:switch="${user.role}">-->
+<!--    <p th:case="'admin'">User is an administrator</p>-->
+<!--    <p th:case="#{roles.manager}">User is a manager</p>-->
+<!--    <p th:case="*">User is some other thing</p>-->
+<!--</div>-->
+
+<h3> Wybierz Ankietę </h3>
+<h3>Lista Ankiet</h3>
+<ol th:if="allQuestionaireList!=null" >
+    <li th:each="questionaireList : ${allQuestionaireList}">
+            <div class="single-element" >
+
+                <span th:text="${questionaireList.titleQnnaire}" /> - (<span th:text="${questionaireList.descript}" />)
+                <span sec:authorize="hasRole('ADMIN')"><a th:href="@{/editadminqnairelist}">Edytuj</a> </span>
+<!--                <a th:href="@{/admin/user(id=${user.id})}" >Edytuj</a>-->
+            </div>
+
+    </li>
+</ol>
+
+<br>
+<br>
+
+
+<h3> Wybierz Quiz </h3>
+<ol th:if="allQuizList!=null" >
+    <li th:each="quizList : ${allQuizList}">
+        <div class="single-element" >
+
+            <span th:text="${quizList.titleQuiz}" /> - (<span th:text="${quizList.getDescriptQuiz()}" />)
+            <span sec:authorize="hasRole('ADMIN')"><a th:href="@{/editadminquizlist}">Edytuj</a> </span>
+        </div>
+
+    </li>
+</ol>
 
 
 </body>

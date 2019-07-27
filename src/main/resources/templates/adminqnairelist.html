@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Questionnaire LIST</title>
+    <div th:replace="fragments/header :: header-libs"></div>
+</head>
+<body>
+<h3>Lista Ankiet</h3>
+<ol th:if="adminQuestionaireList!=null">
+    <li th:each="questionaireList : ${adminQuestionaireList}">
+        <div class="single-element">
+            <p th:text="${questionaireList.titleQnnaire}" ></p>
+            <p th:text="${questionaireList.descript}" ></p>
+        </div>
+    </li>
+</ol>
+
+
+
+
+</body>
+</html>
